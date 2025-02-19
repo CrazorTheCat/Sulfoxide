@@ -56,8 +56,10 @@ function remoteclass:functioninfo()
 return debug.getinfo(self.callingfunction)
 end
 local GetDebugId = game.GetDebugId
-
+print("wtfffff")
 local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
+    print("wtfffff 2")
+
     local self = ...
     local initialargs = {...}
     local args = createtablewithnil()
@@ -67,7 +69,9 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
 if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
+    print("wtfffff 3")
     local oldid = getthreadidentity()
+    print("wtffasd asd asd asdkjaskjdhkaj")
     setthreadidentity(8)
     print("waht")
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
