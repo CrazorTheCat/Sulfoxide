@@ -65,9 +65,8 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     end
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
-    print("getcallingscript", typeof(self), method)
 if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
-    print("wtfffff 3")
+    print("getcallingscript", typeof(self), method)
     local oldid = getthreadidentity()
     print("wtffasd asd asd asdkjaskjdhkaj")
     setthreadidentity(8)
