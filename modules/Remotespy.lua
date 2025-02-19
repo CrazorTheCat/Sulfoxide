@@ -81,6 +81,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
 end
     return old(...)
 end))
+--[[
 for i,v in pairs(getinstances()) do
     if typeof(v) == Instance then
         if v:IsA("BaseRemoteEvent") then
@@ -90,6 +91,7 @@ for i,v in pairs(getinstances()) do
                 addcall(remote)
                 return true, ...
             end)]]
+--[[
             v.OnClientEvent:Connect(function(...)
                 local method = "OnClientEvent"
                 local caller = checkcaller()
@@ -137,6 +139,7 @@ for i,v in pairs(getinstances()) do
     end
 end
 end
+]]
 --[[
 local fireserver = Instance.new("RemoteEvent").FireServer
 local invokeserver = Instance.new("RemoteFunction").InvokeServer
