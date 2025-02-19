@@ -77,9 +77,11 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
     end
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
+    priny('trying to add call')
     print(pcall(function()
         task.spawn(addcall,remote)
     end))
+    print("done")
     setthreadidentity(oldid)
     return returnedvalue
 end
