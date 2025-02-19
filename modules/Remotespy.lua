@@ -71,6 +71,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
     print("wtffasd asd asd asdkjaskjdhkaj")
     --setthreadidentity(8)
     print("waht")
+    --[[
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
         print("oh okay")
         return 
@@ -78,7 +79,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
         then
             print("huh")
             return old(...)
-    end
+    end--]]
     print("passed")
     local returnedvalue = old(...)
     print("cloning")
