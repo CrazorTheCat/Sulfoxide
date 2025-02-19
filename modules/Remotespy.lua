@@ -78,7 +78,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
     print('trying to add call')
-    task.spawn(addcall,remote)
+    --task.spawn(addcall,remote)
     print("done")
     setthreadidentity(oldid)
     return returnedvalue
