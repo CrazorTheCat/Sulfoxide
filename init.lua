@@ -1,5 +1,3 @@
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/init.lua"))()
-
 if getgenv().ui then warn("already executed!") return end
 getgenv().import = function(module)
     if getgenv().settings.runmode == "web" then
