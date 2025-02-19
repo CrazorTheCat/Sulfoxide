@@ -40,7 +40,7 @@ local function comparetables(t1,t2)
     local t2string = luaencode(t2)
     return t1string==t2string
 end
---[[
+
 local remoteclass = {}
 remoteclass.__index = remoteclass
 function remoteclass.new(remote, method, args, returnedvalue, callingscript, callingfunction)
