@@ -1,6 +1,6 @@
 local addcall = import("ui/modules/Remotespy.lua")
 local luaencode = import("modules/luaencode.lua")
---local randomstr = crypt.generatebytes(25) --making sure games can't mess with this system
+local randomstr = crypt.generatebytes(25) --making sure games can't mess with this system
 local function createtablewithnil()
     local tbl = {}
     local storage = {}
