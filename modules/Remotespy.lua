@@ -66,7 +66,7 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     end
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
---[[if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
+if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
     local oldid = getthreadidentity()
     setthreadidentity(8)
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
@@ -77,10 +77,12 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     end
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
-    task.spawn(addcall,remote)
+    print(pcall(function()
+        task.spawn(addcall,remote)
+    end))
     setthreadidentity(oldid)
     return returnedvalue
-end]]
+end
     return old(...)
 end))
 --]]
