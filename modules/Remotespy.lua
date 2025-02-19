@@ -56,7 +56,7 @@ function remoteclass:functioninfo()
 return debug.getinfo(self.callingfunction)
 end
 local GetDebugId = game.GetDebugId
---[[
+
 local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local self = ...
     local initialargs = {...}
@@ -83,7 +83,6 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
 end
     return old(...)
 end))
---]]
 --[[
 for i,v in pairs(getinstances()) do
     if typeof(v) == Instance then
