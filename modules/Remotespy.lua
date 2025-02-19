@@ -82,7 +82,7 @@ end
     return old(...)
 end))
 for i,v in pairs(getinstances()) do
-    if v:IsA("BaseRemoteEvent") then
+    if typeof(v) == Instance and v:IsA("BaseRemoteEvent") then
         --[[hooksignal(v.OnClientEvent,function(info,...)
             print("hooksignal works")
             local remote = remoteclass.new(v, "OnClientEvent", {...}, nil, nil)
@@ -112,7 +112,7 @@ for i,v in pairs(getinstances()) do
         local _,old = pcall(hookfunction,getcallbackvalue(v, "OnClientInvoke"), newcclosure(function(...)
             local oldid = getthreadidentity()
             setthreadidentity(8)
-            local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/0Void2391/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
+            local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
             local method = "OnClientInvoke"
             local caller = checkcaller()
             local returnedvalue = old(...)
@@ -265,7 +265,7 @@ if typeof(v) == "Instance" then
         local _,old = pcall(hookfunction,getcallbackvalue(v, "OnClientInvoke"), newcclosure(function(...)
             local oldid = getthreadidentity()
             setthreadidentity(8)
-            local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/0Void2391/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
+            local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
             local method = "OnClientInvoke"
             local initialargs = {...}
             local caller = checkcaller()

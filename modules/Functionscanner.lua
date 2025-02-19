@@ -41,7 +41,7 @@ if mode == "Name" then
                         end
                     end
                     local str = [[--Generated with Sulfoxide
-local soaux = loadstring(game:HttpGet("https://raw.githubusercontent.com/0Void2391/Sulfoxide/refs/heads/main/soaux.lua"))()
+local soaux = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/soaux.lua"))()
 local constants = ]]..luaencode(reducedconstants, {Prettify = true})..[[
 
 local func = soaux.searchClosure(%s, %s, %s)]]
@@ -117,7 +117,7 @@ elseif mode == "Path" then
                         end
                     end
                     local str = [[--Generated with Sulfoxide
-local soaux = loadstring(game:HttpGet("https://raw.githubusercontent.com/0Void2391/Sulfoxide/refs/heads/main/soaux.lua"))()
+local soaux = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/soaux.lua"))()
 local constants = ]]..luaencode(reducedconstants, {Prettify = true})..[[
 
 local func = soaux.searchClosure(%s, %s, %s)]]
