@@ -57,7 +57,7 @@ return debug.getinfo(self.callingfunction)
 end
 local GetDebugId = game.GetDebugId
 
-local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
+--[[local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local self = ...
     local initialargs = {...}
     local args = createtablewithnil()
@@ -76,6 +76,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
         then
             return old(...)
     end--]]
+    --[[
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
     task.spawn(addcall,remote)
@@ -84,6 +85,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
 end
     return old(...)
 end))
+]]
 for i,v in pairs(getinstances()) do
     if typeof(v) == Instance then
         if v:IsA("BaseRemoteEvent") then
