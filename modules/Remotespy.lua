@@ -69,7 +69,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
     print("getcallingscript", typeof(self), method)
     local oldid = getthreadidentity()
     print("wtffasd asd asd asdkjaskjdhkaj")
-    setthreadidentity(8)
+    --setthreadidentity(8)
     print("waht")
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
         print("oh okay")
@@ -84,7 +84,7 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
     print("cloning")
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
     print('trying to add call')
-    --task.spawn(addcall,remote)
+    task.spawn(addcall,remote)
     print("done")
     setthreadidentity(oldid)
     return returnedvalue
