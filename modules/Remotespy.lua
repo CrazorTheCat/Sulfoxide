@@ -57,7 +57,7 @@ return debug.getinfo(self.callingfunction)
 end
 local GetDebugId = game.GetDebugId
 
---[[local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
+local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local self = ...
     local initialargs = {...}
     local args = createtablewithnil()
@@ -66,26 +66,25 @@ local GetDebugId = game.GetDebugId
     end
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
-if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
+--[[if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
     local oldid = getthreadidentity()
     setthreadidentity(8)
-    --[[
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
         return 
     elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(self))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method].args,args)) or getgenv().iscaller and caller
         then
             return old(...)
-    end--]]
-    --[[
+    end
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
     task.spawn(addcall,remote)
     setthreadidentity(oldid)
     return returnedvalue
-end
+end]]
     return old(...)
 end))
-]]
+--]]
+--[[
 for i,v in pairs(getinstances()) do
     if typeof(v) == Instance then
         if v:IsA("BaseRemoteEvent") then
@@ -95,6 +94,7 @@ for i,v in pairs(getinstances()) do
                 addcall(remote)
                 return true, ...
             end)]]
+--[[
             v.OnClientEvent:Connect(function(...)
                 local method = "OnClientEvent"
                 local caller = checkcaller()
@@ -142,7 +142,8 @@ for i,v in pairs(getinstances()) do
     end
 end
 end
-
+]]
+--[[
 local fireserver = Instance.new("RemoteEvent").FireServer
 local invokeserver = Instance.new("RemoteFunction").InvokeServer
 local fire = Instance.new("BindableEvent").Fire
@@ -193,6 +194,7 @@ local old; old = hookfunction(invokeserver,newcclosure(function(...)
             end
             I decided to comment because it's dtc idk why
             ]]
+--[[
             local remote = remoteclass.new(cloneref(self),method,args,callingscript,debug.info(3,"f"))
             task.spawn(addcall,remote)
             setthreadidentity(oldid)
@@ -246,7 +248,8 @@ local old; old = hookfunction(invoke,newcclosure(function(...)
             setthreadidentity(oldid)
             return returnedvalue
         end))
-
+]]
+--[[
 game.DescendantAdded:Connect(function(v)
 if typeof(v) == "Instance" then
     if v:IsA("BaseRemoteEvent") then
@@ -300,3 +303,4 @@ if typeof(v) == "Instance" then
 end
 end
 end)
+]]
