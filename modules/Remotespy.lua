@@ -58,8 +58,6 @@ end
 local GetDebugId = game.GetDebugId
 print("wtfffff")
 local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
-    print("wtfffff 2")
-
     local self = ...
     local initialargs = {...}
     local args = createtablewithnil()
