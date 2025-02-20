@@ -257,6 +257,8 @@ local function getremotecallfuncs(remote)
 	return remotecallfunctions
 end
 function addcall(remote)
+	local ogId = getthreadidentity
+	setthreadidentity(8)
 	local remoteinstance = remote.remote
 	if not getgenv().loggedremotes[(getdebugid(remoteinstance))..remote.method] then
 		local newlog = logexample.Clone(logexample)
@@ -405,5 +407,6 @@ function addcall(remote)
 			end
 		end
 	end
+	setthreadidentity(ogId)
 end
 return addcall
