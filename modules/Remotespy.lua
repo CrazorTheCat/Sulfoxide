@@ -65,8 +65,7 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
 if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
-    --local oldid = getthreadidentity()
-    --[[
+    local oldid = getthreadidentity()
     setthreadidentity(8)
     if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
         return 
@@ -74,11 +73,11 @@ if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "
         then
             return old(...)
     end
-    --]]
+    
     local returnedvalue = old(...)
     local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
     task.spawn(addcall,remote)
-    --setthreadidentity(oldid)
+    setthreadidentity(oldid)
     return returnedvalue
 end
     return old(...)
@@ -113,8 +112,8 @@ for i,v in pairs(getinstances()) do
             if getcallbackvalue and pcall(getcallbackvalue,v, "OnClientInvoke") then
             local old; 
             local _,old = pcall(hookfunction,getcallbackvalue(v, "OnClientInvoke"), newcclosure(function(...)
-                --local oldid = getthreadidentity()
-                --setthreadidentity(8)
+                local oldid = getthreadidentity()
+                setthreadidentity(8)
                 local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
                 local method = "OnClientInvoke"
                 local caller = checkcaller()
@@ -124,15 +123,15 @@ for i,v in pairs(getinstances()) do
                 for i = 1, select("#",...) do
                     args[i] = initialargs[i]
                 end
-                --[[if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
+                if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
                     return 
                 elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(v))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method].args,args)) or getgenv().iscaller and caller
                     then
                         return
-                end]]
+                end
                 local remote = remoteclass.new(cloneref(v), method, args, returnedvalue, nil, nil)
                 task.spawn(addcall,remote)
-                --setthreadidentity(oldid)
+                setthreadidentity(oldid)
                 return returnedvalue
             end))
             end
@@ -154,17 +153,17 @@ local old; old = hookfunction(fireserver,newcclosure(function(...)
             local caller = checkcaller()
             local method = "FireServer"
             local returnedvalue = old(...)
-            --[[local oldid = getthreadidentity()
+            local oldid = getthreadidentity()
             setthreadidentity(8)
             if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
                 return 
             elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(self))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method].args,args)) or getgenv().iscaller and caller
                 then 
                 return returnedvalue
-            end]]
+            end
             local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
             task.spawn(addcall,remote)
-            --setthreadidentity(oldid)
+            setthreadidentity(oldid)
             return returnedvalue
         end))
 local old; old = hookfunction(invokeserver,newcclosure(function(...)
@@ -178,8 +177,8 @@ local old; old = hookfunction(invokeserver,newcclosure(function(...)
             local caller = checkcaller()
             local method = "InvokeServer"
             local returnedvalue = old(...)
-            --[[local oldid = getthreadidentity()
-            setthreadidentity(8)]]
+            local oldid = getthreadidentity()
+            setthreadidentity(8)
             --[[
             if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
                 return 
@@ -191,7 +190,7 @@ local old; old = hookfunction(invokeserver,newcclosure(function(...)
             ]]
             local remote = remoteclass.new(cloneref(self),method,args,callingscript,debug.info(3,"f"))
             task.spawn(addcall,remote)
-            --setthreadidentity(oldid)
+            setthreadidentity(oldid)
             return returnedvalue
         end))
 local old; old = hookfunction(fire,newcclosure(function(...)
@@ -205,17 +204,17 @@ local old; old = hookfunction(fire,newcclosure(function(...)
             local caller = checkcaller()
             local method = "Fire"
             local returnedvalue = old(...)
-            --[[local oldid = getthreadidentity()
+            local oldid = getthreadidentity()
             setthreadidentity(8)
             if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
                 return 
             elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(self))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(self.GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method].args,args)) or getgenv().iscaller and caller
                 then 
                 return old(...)
-            end--]]
+            end
             local remote = remoteclass.new(cloneref(self),method,args,callingscript,debug.info(3,"f"))
             task.spawn(addcall,remote)
-            --setthreadidentity(oldid)
+            setthreadidentity(oldid)
             return returnedvalue
         end))
 local old; old = hookfunction(invoke,newcclosure(function(...)
@@ -229,17 +228,17 @@ local old; old = hookfunction(invoke,newcclosure(function(...)
             local caller = checkcaller()
             local method = "Invoke"
             local returnedvalue = old(...)
-            --[[local oldid = getthreadidentity()
+            local oldid = getthreadidentity()
             setthreadidentity(8)
             if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
                 return 
             elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(self))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(self))..method].args,args)) or getgenv().iscaller and caller
                 then 
                 return old(...)
-            end]]
+            end
             local remote = remoteclass.new(cloneref(self),method,args,callingscript,debug.info(3,"f"))
             task.spawn(addcall,remote)
-            --setthreadidentity(oldid)
+            setthreadidentity(oldid)
             return returnedvalue
         end))
 game.DescendantAdded:Connect(function(v)
@@ -253,12 +252,12 @@ if typeof(v) == "Instance" then
             for i = 1, select("#",...) do
                 args[i] = initialargs[i]
             end
-            --[[if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
+            if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
                 return 
             elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(v))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method].args,args)) or getgenv().iscaller and caller
                 then
                     return
-            end]]
+            end
             local remote = remoteclass.new(cloneref(v), method, args, nil, function() end)
             addcall(remote)
         end)
@@ -267,8 +266,8 @@ if typeof(v) == "Instance" then
         if getcallbackvalue and pcall(getcallbackvalue,v, "OnClientInvoke") then
         local old; 
         local _,old = pcall(hookfunction,getcallbackvalue(v, "OnClientInvoke"), newcclosure(function(...)
-            --local oldid = getthreadidentity()
-            --setthreadidentity(8)
+            local oldid = getthreadidentity()
+            setthreadidentity(8)
             local addcall = loadstring(game:HttpGet("https://raw.githubusercontent.com/CrazorTheCat/Sulfoxide/refs/heads/main/ui/modules/Remotespy.lua"))()--upvalue exceeded fix
             local method = "OnClientInvoke"
             local initialargs = {...}
@@ -278,15 +277,15 @@ if typeof(v) == "Instance" then
             for i = 1, select("#",...) do
                 args[i] = initialargs[i]
             end
-            --[[if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
+            if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
                 return 
             elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(v))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method].args,args)) or getgenv().iscaller and caller
                 then
                     return
-            end]]
+            end
             local remote = remoteclass.new(cloneref(v), method, args, nil, function() end)
             task.spawn(addcall,remote)
-            --setthreadidentity(oldid)
+            setthreadidentity(oldid)
             return returnedvalue
         end))
                 else
