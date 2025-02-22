@@ -69,6 +69,7 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
     if typeof(self) == "Instance" and (string.gsub(method, "^%l", string.upper) == "FireServer" or method == "InvokeServer" or method == "Fire" or method == "Invoke") and (self.ClassName and self.ClassName == "RemoteEvent" or self.ClassName == "RemoteFunction" or self.ClassName == "BindableEvent" or self.ClassName == "BindableFunction") then
+        appendfile("DEBUGGING.txt", string.format("\nNamecall type = %s, Callingscript = %s, Returned value = %s", method, callingscript, old(...)))
         local oldid = getthreadidentity()
         setthreadidentity(8)
         if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
@@ -95,9 +96,9 @@ for i,v in pairs(getinstances()) do
                 return true, ...
             end)]]
             v.OnClientEvent:Connect(function(...)
-                print('OnClientEvent')
                 local method = "OnClientEvent"
                 local caller = checkcaller()
+                appendfile("DEBUGGING.txt", string.format("\nFound a BaseRemoteEvent type = %s, Caller = %s", method, caller))
                 if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
                     return
                 elseif getgenv().loggedremotes.ignoredremotes["All"][(GetDebugId(v))..method] or (getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.ignoredremotes["Args"][(GetDebugId(v))..method].args,args)) or getgenv().iscaller and caller then
@@ -121,6 +122,7 @@ for i,v in pairs(getinstances()) do
                 local method = "OnClientInvoke"
                 local caller = checkcaller()
                 local returnedvalue = old(...)
+                appendfile("DEBUGGING.txt", string.format("\nFound a RemoteFunction type = %s, Caller = %s, Returned value = %s", method, caller, returnedvalue))
                 local initialargs = {...}
                 local args = createtablewithnil()
                 for i = 1, select("#",...) do
@@ -153,6 +155,7 @@ local hooks = {
 }
 
 for i,v in pairs(hooks) do
+    appendfile("DEBUGGING.txt", string.format"\nHooked to %s", i)
     local old; old = hookfunction(v,newcclosure(function(...)
         local self = ...
         local initialargs = {...}
@@ -164,6 +167,7 @@ for i,v in pairs(hooks) do
         local caller = checkcaller()
         local method = tostring(i)
         local returnedvalue = old(...)
+        appendfile("DEBUGGING.txt", string.format("\nHooked Type = %s, Callingscript = %s, Caller = %s, Returned value = %s", method, callingscript, caller, returnedvalue))
         local oldid = getthreadidentity()
         setthreadidentity(8)
         if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
@@ -177,7 +181,6 @@ for i,v in pairs(hooks) do
         setthreadidentity(oldid)
         return returnedvalue
     end))
-    print('hooked', i,v)
 end
 
 game.DescendantAdded:Connect(function(v)
@@ -188,6 +191,7 @@ game.DescendantAdded:Connect(function(v)
                 local initialargs = {...}
                 local caller = checkcaller()
                 local args = createtablewithnil()
+                appendfile("DEBUGGING.txt", string.format("\nNew BaseRemoteEvent = %s, Caller = %s", method, caller))
                 for i = 1, select("#",...) do
                     args[i] = initialargs[i]
                 end
@@ -213,6 +217,7 @@ game.DescendantAdded:Connect(function(v)
                     local caller = checkcaller()
                     local returnedvalue = old(...)
                     local args = createtablewithnil()
+                    appendfile("DEBUGGING.txt", string.format("\nNew RemoteFunction = %s, Caller = %s, Returned value = %s", method, caller, returnedvalue))
                     for i = 1, select("#",...) do
                         args[i] = initialargs[i]
                     end
