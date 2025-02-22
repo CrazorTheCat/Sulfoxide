@@ -95,6 +95,7 @@ for i,v in pairs(getinstances()) do
                 return true, ...
             end)]]
             v.OnClientEvent:Connect(function(...)
+                print('OnClientEvent')
                 local method = "OnClientEvent"
                 local caller = checkcaller()
                 if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(v)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(v))..method].args,args)) then
@@ -176,6 +177,7 @@ for i,v in pairs(hooks) do
         setthreadidentity(oldid)
         return returnedvalue
     end))
+    print('hooked', i,v)
 end
 
 game.DescendantAdded:Connect(function(v)
