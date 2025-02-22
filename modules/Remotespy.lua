@@ -79,6 +79,7 @@ local old; old = hookmetamethod(game, "__namecall", newcclosure(function(...)
         end
         local returnedvalue = old(...)
         local remote = remoteclass.new(cloneref(self),method,args,returnedvalue,callingscript,debug.info(3,"f"))
+        appendfile("DEBUGGING.txt", "\nNamecall type", method, "Callingscript", callingscript, "Returned value", old(...))
         task.spawn(addcall,remote)
         setthreadidentity(oldid)
         return returnedvalue
