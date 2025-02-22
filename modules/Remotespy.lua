@@ -167,7 +167,7 @@ for i,v in pairs(hooks) do
         local caller = checkcaller()
         local method = tostring(i)
         local returnedvalue = old(...)
-        appendfile("DEBUGGING.txt", "\nHooked Type", method, "Callingscript", callingscript, "Caller", caller, "Returned value", returnedvalue))
+        appendfile("DEBUGGING.txt", "\nHooked Type", method, "Callingscript", callingscript, "Caller", caller, "Returned value", returnedvalue)
         local oldid = getthreadidentity()
         setthreadidentity(8)
         if getgenv().loggedremotes.blockedremotes["All"][GetDebugId(self)..method] or (getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method] and comparetables(getgenv().loggedremotes.blockedremotes["Args"][(GetDebugId(self))..method].args,args)) then
